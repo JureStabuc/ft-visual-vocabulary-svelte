@@ -1,13 +1,13 @@
 <script>
-import Bar from './magnitude/bar/Bar.svelte'
-import data from './magnitude/bar/data.js'
-import Order from './ranking/ordered_bar/Bar.svelte'
+import Column from './magnitude/column/Column.svelte'
+import data from './magnitude/column/data.js'
+import Order from './ranking/column/Column.svelte'
 
 </script>
 
 <style></style>
 
 <div class='wrapper'>
-	<div class='magnitude'><Bar data={data}/></div>
+	<div class='magnitude'><Column data={data}/></div>
 	<div class='ranking'><Order data={data}/></div>
 </div>
