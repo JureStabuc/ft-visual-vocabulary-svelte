@@ -1,8 +1,8 @@
 <script>
 // import Column from './magnitude/column/Column.svelte'
-import data from './change-over-time/column/data.js'
+import data from './change-over-time/line/data.js'
 // import Order from './ranking/column/Column.svelte'
-import Time from './change-over-time/column/Column.svelte'
+import Line from './change-over-time/line/Line.svelte'
 
 </script>
 
@@ -11,5 +11,5 @@ import Time from './change-over-time/column/Column.svelte'
 <div class='wrapper'>
 	<!-- <div class='magnitude'><Column data={data}/></div>
 	<div class='ranking'><Order data={data}/></div> -->
-	<div class='time'><Time data={data}/></div>
+	<div class='line'><Line data={data}/></div>
 </div>

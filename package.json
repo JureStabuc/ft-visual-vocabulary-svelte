@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "d3": "^6.2.0",
+    "d3-collection": "^1.0.7",
     "sirv-cli": "^1.0.0"
   }
 }
