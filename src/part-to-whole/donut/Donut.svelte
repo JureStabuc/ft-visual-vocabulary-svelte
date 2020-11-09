@@ -17,13 +17,14 @@
     sortData,
     yLabel,
     textFill,
-    labelFormat
+    labelFormat,
+    donutTitle
   } = config
 
   const radius = Math.min(width - margin.left - margin.right, height - margin.top - margin.bottom) / 2
 
   const arcGen = arc()
-    .innerRadius(0)
+    .innerRadius(radius * 0.67)
     .outerRadius(radius - 1)
 
   const pieGen = pie()
@@ -32,8 +33,8 @@
   const arcs = pieGen(data)
 
   const arcLabel = arc()
-    .innerRadius(radius * 0.7)
-    .outerRadius(radius * 0.7)
+    .innerRadius(radius * 0.82)
+    .outerRadius(radius * 0.82)
 
   const legendScale = scaleOrdinal()
     .domain(data.map(d => d.group))
@@ -52,13 +53,16 @@
       .select('.legend')
       .call(legend)
   })
-
-
 </script>
 
 <style>
 .data-label {
   fill: #fafafa;
+  font-weight: 600;
+}
+
+.donut-title {
+  font-size: 18px;
   font-weight: 600;
 }
 </style>
@@ -78,6 +82,9 @@
         {/if}
         </g>
       {/each}
+    </g>
+    <g transform='translate({radius + margin.left}, {radius + margin.top})'>
+      <text class='donut-title' x='0' y='0' text-anchor='middle'>{donutTitle}</text>
     </g>
   </svg>
 </div>
