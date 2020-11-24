@@ -1,0 +1,1 @@
+<p>The FT Visual Vocabulary is at the core of a newsroom-wide training session aimed at improving chart literacy. This learning resource is inspired by the Graphic Continuum by Jon Schwabish and Severino Ribecca. This is not an attempt to teach everyone how to make charts, but how to recognise the opportunities to use them effectively alongside words.</p>

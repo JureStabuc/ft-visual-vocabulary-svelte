@@ -1,6 +1,6 @@
 export default
   {
-    bind: '.magnitude',
+    bind: '.bar',
   	margin: {
   		top: 50,
   		right: 50,

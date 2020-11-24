@@ -1,22 +1,32 @@
 <!-- https://linguinecode.com/post/create-a-navbar-in-svelte -->
 <script>
   import { onMount } from 'svelte'
+  import Intro from './Intro.svelte'
+  import Cot from './change-over-time/Cot.svelte'
+  import Correlation from './correlation/Correlation.svelte'
+  import Deviation from './deviation/Deviation.svelte'
+  import Distribution from './distribution/Distribution.svelte'
+  import Flow from './flow/Flow.svelte'
+  import Magnitude from './magnitude/Magnitude.svelte'
+  import  Ptw  from './part-to-whole/Ptw.svelte'
+  import Ranking from './ranking/Ranking.svelte'
+  import Spatial from './spatial/Spatial.svelte'
 
   // show mobile
   let showMobileMenu = false
 
   // list of nav items
   const navItems = [
-    { label: 'Visual Vocabulary', href: '#' },
-    { label: 'Deviation', href: '#' },
-    { label: 'Correlation', href: '#' },
-    { label: 'Ranking', href: '#' },
-    { label: 'Distribution', href: '#' },
-    { label: 'Change over Time', href: '#' },
-    { label: 'Magnitude', href: '#' },
-    { label: 'Part-to-whole', href: '#' },
-    { label: 'Spatial', href: '#' },
-    { label: 'Flow', href: '#' }
+    { label: 'Visual Vocabulary', component: Intro },
+    { label: 'Deviation', component: Deviation },
+    { label: 'Correlation', component: Correlation },
+    { label: 'Ranking', component: Ranking },
+    { label: 'Distribution', component: Distribution },
+    { label: 'Change over Time', component: Cot },
+    { label: 'Magnitude', component: Magnitude },
+    { label: 'Part-to-whole', component: Ptw },
+    { label: 'Spatial', component: Spatial },
+    { label: 'Flow', component: Flow }
   ]// Mobile menu click event handler
   const handleMobileIconClick = () => (showMobileMenu = !showMobileMenu);
 
@@ -26,7 +36,16 @@
     if (!e.matches) {
       showMobileMenu = false;
     }
-  };
+  }
+
+  let selected = navItems[0]
+
+  let intSelected = 0
+
+  function changeComponent(event) {
+  	selected = navItems[event.srcElement.id];
+  	intSelected = event.srcElement.id;
+  }
 
   // Attach media query listener on mount hook
   onMount(() => {
@@ -42,14 +61,20 @@
       <div class='middle-line'></div>
     </div>
     <ul class={`navbar-list${showMobileMenu ? ' mobile' : ''}`}>
-      {#each navItems as item}
+      {#each navItems as item, i}
         <li>
-          <a href={item.href}>{item.label}</a>
+          <a on:click={changeComponent} id={i}>{item.label}</a>
         </li>
       {/each}
     </ul>
   </div>
 </nav>
+
+<div>
+  <h1>{selected.label}</h1>
+  <!-- this is where our main content is placed -->
+  <svelte:component this={selected.component}/>
+</div>
 
 <style>
   nav {
@@ -169,6 +194,12 @@
     padding: 0 10px;
     font-size: 13px;
   }
+
+  .navbar-list li:hover {
+    background-color: #5c5c60;
+  }
+
+
 
   @media only screen and (min-width: 767px) {
     .mobile-icon {

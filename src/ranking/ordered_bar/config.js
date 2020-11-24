@@ -1,6 +1,6 @@
 export default
   {
-    bind: '.ranking',
+    bind: '.ordered-bar',
   	margin: {
   		top: 50,
   		right: 50,
