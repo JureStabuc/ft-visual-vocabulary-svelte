@@ -11,7 +11,6 @@ export default
   	height: 400,
     timeParseFormat: '%Y',
     dateFormat: "'%y",
-  	barFill: '#54a2eb',
     title: 'Turnover of pubs and bars, UK, 2001 to 2016',
     sortData: true,
     yLabel: '£ billions',

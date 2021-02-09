@@ -28,7 +28,6 @@
     height,
     timeParseFormat,
     dateFormat,
-    barFill,
     title,
     sortData,
     yLabel,
