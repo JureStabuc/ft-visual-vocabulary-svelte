@@ -4,11 +4,8 @@
   import { geoMercator, geoPath } from 'd3-geo'
   import { feature } from 'topojson'
   import geo from './boundaries.js'
-  import { min, max, ascending } from 'd3-array'
-  import { scaleLinear } from 'd3-scale'
-  import { format } from 'd3-format'
-  import { equalIntervalBreaks, ckmeans } from 'simple-statistics'
-  import { legendColor, legendSize } from 'd3-svg-legend'
+  import { ascending, extent } from 'd3-array'
+  import { scaleSqrt } from 'd3-scale'
   import data from './data'
   import config from './config'
 
@@ -25,7 +22,8 @@
     numberBreaks,
     title,
     legendDecimals,
-    legendFormat
+    legendFormat,
+    circleFill
   } = config
 
   const land = feature(geo, geo.objects.boundaries)
@@ -36,34 +34,12 @@
 
   const path = geoPath().projection(projection)
 
+  const z = scaleSqrt()
+    .domain(extent(data, d => +d.value))
+    .range([0, 40])
+
   let values
   let breaksValues
-
-  if (breaks === 'jenks' || breaks === 'equal') {
-    values = data.map(d => +d.value).filter(d => !isNaN(d)).sort(ascending)
-  }
-
-  if (breaks === 'jenks') {
-    breaksValues = []
-
-    ckmeans(values, numberBreaks).map((cluster, i) => {
-      if (i < numberBreaks - 1) {
-        breaksValues.push(cluster[0])
-      }
-      else {
-        breaksValues.push(cluster[0])
-				breaksValues.push(cluster[cluster.length-1]);
-      }
-    })
-  }
-  else if (breaks === 'equal') {
-    breaksValues = equalIntervalBreaks(values, numberBreaks)
-  }
-  else { breaksValues =  breaks }
-
-  const colorScale = scaleLinear()
-    .range(color)
-    .domain(breaksValues.slice(1))
 
   for (let i = 0; i < data.length; i++) {
     const area = data[i].id
@@ -78,19 +54,15 @@
     }
   }
 
-  const legend = legendColor()
-    .shapeWidth(40)
-    .cells(breaksValues.slice(1))
-    .orient('horizontal')
-    .scale(colorScale)
-    .labelFormat(format(legendFormat))
+  // setup the legend
+  const legendScale = scaleSqrt()
+    .domain(extent(data, d => +d.value))
+    .range([0, 40])
 
-  // call legend
-  afterUpdate(() => {
-    select(bind)
-      .select('.legend')
-      .call(legend)
-  })
+  const valuesToShow = [5, 10, 20]
+  const xCircle = 70
+  const xLabel = 150
+  const yCircle = 170
 </script>
 
 <svg width={width} height={height}>
@@ -100,7 +72,17 @@
   <g class='legend' transform='translate(0, 40)'></g>
   <g transform='translate({margin.left}, {margin.top})'>
     {#each land.features as d, i}
-      <path fill={colorScale(d.properties.value)} stroke="#454545" stroke-width="1" d={path(d)} class="border" />
+      <path fill='#efefee' stroke="#454545" stroke-width="1" d={path(d)} class="border" />
+    {/each}
+    {#each land.features as d, i}
+      <circle cx={path.centroid(d)[0]} cy={path.centroid(d)[1]} r={z(d.properties.value)} fill={config.circleFill} opacity='0.5' stroke='#454545' stroke-width="1"></circle>
+    {/each}
+  </g>
+  <g>
+    {#each valuesToShow as d, i}
+      <circle cx={xCircle} cy={yCircle - legendScale(d)} r={legendScale(d)} fill='none' stroke='#454545'></circle>
+      <line x1={xCircle + legendScale(d)} x2={xLabel} y1={yCircle - legendScale(d)} y2={yCircle - legendScale(d)} stroke='#454545' stroke-dasharray='2,2'></line>
+      <text x={xLabel} y={yCircle - legendScale(d)} alignment-baseline='midddle'>{d}</text>
     {/each}
   </g>
 </svg>
