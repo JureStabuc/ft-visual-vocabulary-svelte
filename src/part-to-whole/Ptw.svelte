@@ -11,7 +11,7 @@
 
 </style>
 
-<div class='part-to-whole-page-container'>
+<div class='part-to-whole'>
   <div class='pie'><Pie data={dataPie} /></div>
   <div class='donut'><Donut data={dataDonut} /></div>
   <div class='stacked'><StackedBar data={StackedBarData} /></div>

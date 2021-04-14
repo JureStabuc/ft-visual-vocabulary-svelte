@@ -134,7 +134,7 @@
     <g>
       <text x='-22' y='-15' font-size='10px' fill='#333' text-anchor='start'>{yLabel}</text>
       <g class='x axis' ref='xAxis' transform='translate(0, {height - margin.bottom - margin.top})' />
-      <g class='y axis' ref='yAxis' transform='translate(0, 0)'>
-      </g>
+      <g class='y axis' ref='yAxis' transform='translate(0, 0)'></g>
     </g>
+  </g>
 </svg>
