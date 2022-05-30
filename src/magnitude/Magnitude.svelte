@@ -5,6 +5,8 @@
   import columnData from './column/data.js'
   import Lollipop from './lollipop/Lollipop.svelte'
   import lollipopData from './lollipop/data.js'
+  import Radar from './radar/Radar.svelte'
+  import radarData from './radar/data.js'
 </script>
 <style>
 </style>
@@ -13,4 +15,5 @@
   <div class='bar'><Bar data={barData} /></div>
   <div class='column'><Column data={columnData} /></div>
   <div class='lollipop'><Lollipop data={lollipopData} /></div>
+  <div class='radar'><Radar data={radarData} /></div>
 </div>
